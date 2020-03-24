@@ -1,8 +1,9 @@
 CC=lcc
 emulator=retroarch -L /usr/lib/libretro/gambatte_libretro.so
 pngconvert=./dev/GameBoyPngConverter/linux-x64/GameBoyPngConverter
+tmxconvert=./dev/tmx2c.py
 
-build: pix/overworld_gb_data.c main.gb
+build: pix/overworld_gb_data.c pix/demo_tmap.c main.gb
 
 #-Wl-m map output generated as outfile.map
 #-Wl-j NoICE Debug output as outfile.cdb
@@ -20,8 +21,14 @@ run: main.gb
 %_data.c: %.png
 	$(pngconvert) $^
 
+%_map.c: %.png
+	$(pngconvert) $^
+
+%_tmap.c: %.tmx
+	$(tmxconvert) $^
+
 clean:
-	rm *.gb *.o *.map *.lst *.sym pix/*_map.c pix/*_data.c
+	rm *.gb *.o *.map *.lst *.sym pix/*_map.c pix/*_data.c pix/*_tmap.c
 
 test: build run
 

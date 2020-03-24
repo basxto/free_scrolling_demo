@@ -5,3 +5,4 @@
 *.sym
 *_data.c
 *_map.c
+*_tmap.c
