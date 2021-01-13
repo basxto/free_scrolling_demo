@@ -16,27 +16,17 @@ const uint8_t overworld_gb_map[] = {
 // all maps are 10 tiles (16x16) wide and 9 tiles high
 #define HIGHT (9)
 #define WIDTH (10)
-// tile (8x8) width of our sprite
-#define SPRITEWIDTH (34)
 
 
 void load_map(const unsigned int background[]) {
-	int y;
-	int x;
-	int index;
-	// tmx
-	unsigned int tile;
+	uint8_t tile;
 	// loaded spritesheet
-	int sprite_y;
-	int sprite_x;
-	unsigned char tiles[4];
-	for(y = 0; y < HIGHT; ++y){
-		for(x = 0; x < WIDTH; ++x){
+	uint8_t tiles[4];
+	for(uint8_t y = 0; y < HIGHT; ++y){
+		for(uint8_t x = 0; x < WIDTH; ++x){
 			// 4 tiles are a meta tile
 			tile = (background[(y * WIDTH) + x]-1) * 4;
-			//sprite_x = tile % (SPRITEWIDTH/2);
-			//sprite_y = tile / (SPRITEWIDTH/2);
-			//index = (sprite_y * 2 * SPRITEWIDTH) + (sprite_x * 2);
+			// they are in special 8x16 format
 			tiles[0] = overworld_gb_map[tile];
 			tiles[2] = overworld_gb_map[tile + 1];
 			tiles[1] = overworld_gb_map[tile + 2];
