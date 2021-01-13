@@ -1,39 +1,56 @@
 CC=lcc
-emulator=retroarch -L /usr/lib/libretro/gambatte_libretro.so
-pngconvert=./dev/GameBoyPngConverter/linux-x64/GameBoyPngConverter
+test_emulator=sameboy
+debug_emulator=java -jar dev/emulicious/Emulicious.jar
 tmxconvert=./dev/tmx2c.py
+pngconvert=rgbgfx
+pngconvert+= -h -u
+xxd=xxd
+xxd+= -i
+CFLAGS =
+ifdef DEBUG
+CFLAGS += -Wf--debug -Wf--nolospre -Wl-j -Wl-m -Wl-w -Wl-y
+endif
+ROM=fsr
+BUILDIR=build/
 
-build: pix/overworld_gb_data.c pix/demo_tmap.c main.gb
+build: $(ROM).gb
 
-#-Wl-m map output generated as outfile.map
-#-Wl-j NoICE Debug output as outfile.cdb
-# -Wl-yp0x143=0x80 gameboy mode
-main.gb: main.o
-	$(CC) -Wl-m -Wl-j -o $@ $^
+$(BUILDIR):
+	mkdir -p $@
 
-run: main.gb
-	$(emulator) ./main.gb
+$(ROM).gb: $(BUILDIR)main.o
+	$(CC)$(CFLAGS) -o $@ $^
 
-#-Wa-l create list output outfile.lst
-%.o: %.c
-	$(CC) -Wa-l -c -o $@ $^
+test: $(ROM).gb
+	$(test_emulator) ./$(ROM).gb
 
-%_data.c: %.png
-	$(pngconvert) $^
+# not really needed, emulicious can reload rom on change
+debug: $(ROM).gb
+	$(debug_emulator) ./$(ROM).gb
 
-%_map.c: %.png
-	$(pngconvert) $^
+$(BUILDIR)main.asm: main.c $(BUILDIR)overworld_gb_data.c $(BUILDIR)overworld_gb_map.c pix/demo_tmap.c | $(BUILDIR)
+	$(CC) -S -o $@ $<
+
+$(BUILDIR)%.asm: %.c | $(BUILDIR)
+	$(CC) -S -o $@ $<
+
+%.o: %.asm
+	$(CC) -c -o $@ $<
+
+$(BUILDIR)%.2bpp $(BUILDIR)%.tilemap: pix/%.png | $(BUILDIR)
+	$(pngconvert) $< -o $(BUILDIR)$*.2bpp -t $(BUILDIR)$*.tilemap
+
+%_data.c: %.2bpp
+	$(xxd) < $< > $@
+
+%_map.c: %.tilemap
+	$(xxd) < $< > $@
+
 
 %_tmap.c: %.tmx
 	$(tmxconvert) $^
 
 clean:
-	rm *.gb *.o *.map *.lst *.sym pix/*_map.c pix/*_data.c pix/*_tmap.c
 
-test: build run
+	rm -r build/
 
-base64:
-	base64 main.gb | xclip -selection clipboard
-
-wordcount:
-	wc -m main.c

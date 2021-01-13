@@ -2,11 +2,16 @@
 #include <gb/gb.h>
 // gameboy color
 #include <gb/cgb.h>
-#include <stdio.h>
+// uint8_t etc
+#include <stdint.h>
 
-#include "pix/overworld_gb_data.c"
-#include "pix/overworld_gb_map.c"
-#include "pix/demo_tmap.c"
+const uint8_t overworld_gb_data[] = {
+#include "./build/overworld_gb_data.c"
+};
+const uint8_t overworld_gb_map[] = {
+#include "./build/overworld_gb_map.c"
+};
+#include "./pix/demo_tmap.c"
 
 // all maps are 10 tiles (16x16) wide and 9 tiles high
 #define HIGHT (9)
@@ -47,7 +52,7 @@ void main() {
 	SPRITES_8x16;
 
 	//cgb_compatibility();
-	set_bkg_data(0,144,overworld_gb_data);
+	set_bkg_data(0, sizeof(overworld_gb_data)/16, overworld_gb_data);
 	load_map(demo_tmap_background);
 	
 	SHOW_BKG;

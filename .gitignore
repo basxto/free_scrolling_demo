@@ -1,8 +1,4 @@
 *.gb
-*.lst
-*.map
-*.o
-*.sym
-*_data.c
-*_map.c
-*_tmap.c
+*.ihx
+build/
+dev/emulicious
