@@ -28,10 +28,10 @@ test: $(ROM).gb
 debug: $(ROM).gb
 	$(debug_emulator) ./$(ROM).gb
 
-$(BUILDIR)main.asm: main.c $(BUILDIR)overworld_gb_data.c $(BUILDIR)overworld_gb_map.c pix/demo_tmap.c | $(BUILDIR)
+$(BUILDIR)main.asm: src/main.c $(BUILDIR)overworld_gb_data.c $(BUILDIR)overworld_gb_map.c $(BUILDIR)demo_tmap.c | $(BUILDIR)
 	$(CC) -S -o $@ $<
 
-$(BUILDIR)%.asm: %.c | $(BUILDIR)
+$(BUILDIR)%.asm: src/%.c | $(BUILDIR)
 	$(CC) -S -o $@ $<
 
 %.o: %.asm
@@ -47,8 +47,8 @@ $(BUILDIR)%.2bpp $(BUILDIR)%.tilemap: pix/%.png | $(BUILDIR)
 	$(xxd) < $< > $@
 
 
-%_tmap.c: %.tmx
-	$(tmxconvert) $^
+$(BUILDIR)%_tmap.c: lvl/%.tmx | $(BUILDIR)
+	$(tmxconvert) $^ -o $@
 
 clean:
 

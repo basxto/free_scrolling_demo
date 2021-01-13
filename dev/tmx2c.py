@@ -1,12 +1,23 @@
 #!/bin/env python3
 from xml.dom import minidom
+import argparse
 import os
 import sys
-filename = sys.argv[-1]
-if filename.split('.')[-1] != 'tmx':
-    print("Please give a tmx file", file=sys.stderr)
+
+parser = argparse.ArgumentParser()
+parser.add_argument('tmx', metavar='map.tmx', help='Tiled map file')
+parser.add_argument("--output", "-o", default="", help="Name for generated c files")
+global args
+args = parser.parse_args()
+
+if args.tmx.split('.')[-1] != 'tmx':
+    print("Please give a .tmx file", file=sys.stderr)
     exit(1)
+filename = args.tmx
 cfilename = filename.split('.')[0] + '_tmap.c'
+if args.output != "":
+    cfilename = args.output
+
 xmldoc = minidom.parse(filename)
 tmxmap = xmldoc.getElementsByTagName('map')[0]
 
