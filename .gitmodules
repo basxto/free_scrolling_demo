@@ -1,0 +1,3 @@
+[submodule "dev/loadgpl"]
+	path = dev/loadgpl
+	url = https://github.com/basxto/loadgpl

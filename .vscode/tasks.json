@@ -90,7 +90,7 @@
             "type": "shell",
             "command": "make",
             "args": [
-                "test"
+                "run"
             ],
             "group": {
                 "kind": "test",
