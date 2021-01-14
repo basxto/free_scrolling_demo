@@ -1,4 +1,8 @@
 *.gb
+*.noi
 *.ihx
+*.map
+*.sav
+*.sym
+*.cdb
 build/
-dev/emulicious

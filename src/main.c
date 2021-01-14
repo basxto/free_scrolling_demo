@@ -45,6 +45,6 @@ void main() {
 	//cgb_compatibility();
 	set_bkg_data(0, sizeof(overworld_gb_data)/16, overworld_gb_data);
 	load_map(demo_tmap_background);
-	
+
 	SHOW_BKG;
 }
