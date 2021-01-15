@@ -31,6 +31,6 @@ file.write('//Generated from ' + filename + '\n')
 layers = xmldoc.getElementsByTagName('layer')
 for l in layers:
     name = os.path.basename(filename).split('.')[0] + '_tmap_' + l.attributes['name'].value
-    file.write('const unsigned int ' + name + '[] = {' + l.getElementsByTagName('data')[0].firstChild.nodeValue + '};\n')
-file.close() 
+    file.write('const uint8_t ' + name + '[] = {' + l.getElementsByTagName('data')[0].firstChild.nodeValue + '};\n')
+file.close()
 print('File written to ' + cfilename)

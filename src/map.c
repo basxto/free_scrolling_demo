@@ -11,7 +11,7 @@ void load_map(const uint8_t background[]) {
     for (uint8_t y = 0; y < HIGHT; ++y) {
         for (uint8_t x = 0; x < WIDTH; ++x) {
             // 4 tiles are a meta tile
-            tile = (background[(y * WIDTH) + x]) * 4;
+            tile = (background[(y * WIDTH) + x]-1) * 4;
             // they are in special 8x16 format
             tiles[0] = overworld_gb_map[tile];
             tiles[2] = overworld_gb_map[tile + 1];
