@@ -22,7 +22,7 @@ void main() {
     // cgb_compatibility();
     set_bkg_data(0, sizeof(overworld_gb_data) / 16, overworld_gb_data);
     // load_map(demo_tmap_background);
-    init_map(0, 0, 2, 7);
+    init_map(0, 0, 0, 0);
 
     SHOW_BKG;
     SHOW_SPRITES;
@@ -30,6 +30,18 @@ void main() {
         switch (joypad()) {
         case J_UP: // If joypad() is equal to UP
             map_top();
+            delay(200);
+            break;
+        case J_DOWN:
+            map_down();
+            delay(200);
+            break;
+        case J_LEFT:
+            map_left();
+            delay(200);
+            break;
+        case J_RIGHT:
+            map_right();
             delay(200);
             break;
         default:

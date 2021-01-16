@@ -61,21 +61,21 @@ void render_map() {
 }
 
 void map_top() {
-    uint8_t tile;
-    // loaded spritesheet
-    uint8_t tiles[4];
     --bg_y;
-    --view_y;
-    for (uint8_t x = bg_x; x < (bg_x + VIEW_WIDTH); ++x) {
-        // 4 tiles are a meta tile
-        tile = (tmp_map[((view_y + 0) * MAP_WIDTH) + view_x + x]) * 4;
-        // they are in special 8x16 format
-        tiles[0] = overworld_gb_map[tile];
-        tiles[2] = overworld_gb_map[tile + 1];
-        tiles[1] = overworld_gb_map[tile + 2];
-        tiles[3] = overworld_gb_map[tile + 3];
-        // draw meta tile in one go
-        set_bkg_tiles(x * 2, bg_y * 2, 2, 2, tiles);
-    }
-    scroll_bkg(0, -16);
+    render_map();
+}
+
+void map_down() {
+    ++bg_y;
+    render_map();
+}
+
+void map_left() {
+    --bg_x;
+    render_map();
+}
+
+void map_right() {
+    ++bg_x;
+    render_map();
 }

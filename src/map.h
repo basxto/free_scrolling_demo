@@ -19,4 +19,7 @@ void render_map();
 
 // move map
 void map_top();
+void map_down();
+void map_left();
+void map_right();
 #endif
