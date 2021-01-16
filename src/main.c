@@ -14,9 +14,9 @@ const uint8_t overworld_gb_data[] = {
 };
 
 void main() {
-    NR52_REG = 0x80; // enable sound
-    NR50_REG = 0x77; // full volume
-    NR51_REG = 0xFF; // all channels
+    NR52_REG = 0x00; // enable sound
+    NR50_REG = 0x00; // full volume
+    NR51_REG = 0x00; // all channels
     SPRITES_8x8;
 
     // cgb_compatibility();
@@ -24,4 +24,5 @@ void main() {
     load_map(demo_tmap_background);
 
     SHOW_BKG;
+    SHOW_SPRITES;
 }

@@ -1,0 +1,12 @@
+{
+    "patterns": [
+        {
+            "regexp": "(\\d+)_(\\d+)\\.tmx",
+            "multiplierX": 256,
+            "multiplierY": 256,
+            "offsetX": -256,
+            "offsetY": -256
+        }
+    ],
+    "type": "world"
+}
