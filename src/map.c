@@ -1,8 +1,12 @@
 #include "map.h"
 #include <string.h>
 
-const uint8_t overworld_gb_map[] = {
+const uint8_t tilemap_a[] = {
 #include "../build/overworld_a_gb_map.c"
+};
+
+const uint8_t tilemap_b[] = {
+#include "../build/overworld_b_gb_map.c"
 };
 
 #include "../build/lvl_0_0_tmap.c"
@@ -14,7 +18,9 @@ const Level level[METAMAP_HIGHT][METAMAP_WIDTH] = {{{lvl_0_0_tmap_background}},
                                                    {{lvl_0_1_tmap_background}}};
 
 // maximum length we can iterate with 8bit
-uint8_t tmp_map[256];
+uint8_t tmp_map[4][256];
+uint8_t tmp_tilemap[256];// twice 32
+
 // meta map coordinates
 uint8_t map_x;
 uint8_t map_y;
@@ -31,11 +37,17 @@ void init_map(const uint8_t mx, const uint8_t my, const uint8_t tlx,
               const uint8_t tly) {
     map_x = mx;
     map_y = my;
-    view_x = tlx;
-    view_y = tly;
-    bg_y = 0;
-    bg_x = 0;
-    memcpy(tmp_map, level[my][mx].background, 256);
+    bg_y = tlx;
+    bg_x = tly;
+    memcpy(tmp_map[0], level[my][mx].background, 256);
+    memcpy(tmp_map[1], level[my+1][mx].background, 256);
+    memcpy(tmp_map[2], level[my+1][mx].background, 256);
+    memcpy(tmp_map[3], level[my][mx].background, 256);
+    memcpy(tmp_tilemap, tilemap_a, 128);
+    memcpy(&(tmp_tilemap[128]), tilemap_b, 128);
+    // shift the second map by 128
+    for(uint8_t i = 128; i > 0; ++i)
+        tmp_tilemap[i] ^= 0x40;
     render_map();
 }
 
@@ -44,17 +56,29 @@ void render_map() {
     uint8_t tile;
     // loaded spritesheet
     uint8_t tiles[4];
-    for (uint8_t y = bg_y; y < (bg_y + VIEW_HIGHT); ++y) {
-        for (uint8_t x = bg_x; x < (bg_x + VIEW_WIDTH); ++x) {
+    for (uint8_t y = VIEW_HIGHT; y > 0; --y) {
+        for (uint8_t x = VIEW_WIDTH; x > 0; --x) {
+            uint8_t index = 0;
+            uint8_t final_y = (uint8_t)(y + bg_y - 1);
+            if (final_y >= MAP_HIGHT) {
+                final_y -= MAP_HIGHT;
+                ++index; // 2 or 4
+            }
+            uint8_t final_x = (uint8_t)(x + bg_x - 1);
+            if (final_x >= MAP_WIDTH) {
+                final_x -= MAP_WIDTH;
+                index += 2; // 3 or 4
+            }
+            uint8_t tile_index = (uint8_t)(final_y * MAP_WIDTH) + final_x;
             // 4 tiles are a meta tile
-            tile = (tmp_map[((view_y + y) * MAP_WIDTH) + view_x + x]) * 4;
+            tile = tmp_map[index][tile_index] * 4;
             // they are in special 8x16 format
-            tiles[0] = overworld_gb_map[tile];
-            tiles[2] = overworld_gb_map[tile + 1];
-            tiles[1] = overworld_gb_map[tile + 2];
-            tiles[3] = overworld_gb_map[tile + 3];
+            tiles[0] = tmp_tilemap[tile++];
+            tiles[2] = tmp_tilemap[tile++];
+            tiles[1] = tmp_tilemap[tile++];
+            tiles[3] = tmp_tilemap[tile];
             // draw meta tile in one go
-            set_bkg_tiles(x * 2, y * 2, 2, 2, tiles);
+            set_bkg_tiles((final_x)*2, (final_y)*2, 2, 2, tiles);
         }
     }
     move_bkg(bg_x * 16, bg_y * 16);

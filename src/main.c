@@ -9,8 +9,12 @@
 
 //#include "../build/demo_tmap.c"
 
-const uint8_t overworld_gb_data[] = {
+const uint8_t overworld_a_data[] = {
 #include "../build/overworld_a_gb_data.c"
+};
+
+const uint8_t overworld_b_data[] = {
+#include "../build/overworld_b_gb_data.c"
 };
 
 void main() {
@@ -20,9 +24,10 @@ void main() {
     SPRITES_8x8;
 
     // cgb_compatibility();
-    set_bkg_data(0, sizeof(overworld_gb_data) / 16, overworld_gb_data);
+    set_bkg_data(0, 64, overworld_a_data);
+    set_bkg_data(64, 64, overworld_b_data);
     // load_map(demo_tmap_background);
-    init_map(0, 0, 0, 0);
+    init_map(0, 0, 3, 3);
 
     SHOW_BKG;
     SHOW_SPRITES;

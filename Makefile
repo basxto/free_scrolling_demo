@@ -32,14 +32,14 @@ debug:
 	make DEBUG=1 $(ROM).gb
 	$(debug_emulator) ./$(ROM).gb
 
-$(BUILDIR)/main.asm: src/main.c $(BUILDIR)/overworld_a_gb_data.c | $(BUILDIR)/
-	$(CC) $(CFLAGS) -S -o $@ $<
+$(BUILDIR)/main.asm: src/main.c $(BUILDIR)/overworld_a_gb_data.c $(BUILDIR)/overworld_b_gb_data.c | $(BUILDIR)/
+	$(CC) $(CFLAGS) --fverbose-asm -S -o $@ $<
 
-$(BUILDIR)/map.asm: src/map.c src/map.h $(BUILDIR)/overworld_a_gb_map.c $(BUILDIR)/lvl_0_0_tmap.c $(BUILDIR)/lvl_0_1_tmap.c | $(BUILDIR)/
-	$(CC) $(CFLAGS) -S -o $@ $<
+$(BUILDIR)/map.asm: src/map.c src/map.h $(BUILDIR)/overworld_a_gb_map.c $(BUILDIR)/overworld_b_gb_map.c $(BUILDIR)/lvl_0_0_tmap.c $(BUILDIR)/lvl_0_1_tmap.c | $(BUILDIR)/
+	$(CC) $(CFLAGS) --fverbose-asm -S -o $@ $<
 
 $(BUILDIR)/%.asm: src/%.c | $(BUILDIR)/
-	$(CC) $(CFLAGS) -S -o $@ $<
+	$(CC) $(CFLAGS) --fverbose-asm -S -o $@ $<
 
 %.o: %.asm
 	$(CC) $(CFLAGS) -c -o $@ $<
