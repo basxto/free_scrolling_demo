@@ -16,4 +16,7 @@ typedef struct {
 
 void init_map(const uint8_t mx, const uint8_t my, const uint8_t x, const uint8_t y);
 void render_map();
+
+// move map
+void map_top();
 #endif

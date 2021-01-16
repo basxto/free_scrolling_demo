@@ -1,24 +1,17 @@
-#include <string.h>
 #include "map.h"
+#include <string.h>
 
 const uint8_t overworld_gb_map[] = {
 #include "../build/overworld_a_gb_map.c"
 };
-
 
 #include "../build/lvl_0_0_tmap.c"
 #include "../build/lvl_0_1_tmap.c"
 
 #define METAMAP_HIGHT (uint8_t)(2)
 #define METAMAP_WIDTH (uint8_t)(1)
-const Level level[METAMAP_HIGHT][METAMAP_WIDTH] = {
-    {
-        {lvl_0_0_tmap_background}
-    },
-    {
-        {lvl_0_1_tmap_background}
-    }
-};
+const Level level[METAMAP_HIGHT][METAMAP_WIDTH] = {{{lvl_0_0_tmap_background}},
+                                                   {{lvl_0_1_tmap_background}}};
 
 // maximum length we can iterate with 8bit
 uint8_t tmp_map[256];
@@ -34,7 +27,8 @@ uint8_t bg_y;
 
 // mx,my is the coordinate of the map in the meta map
 // tlx,tly marks the top left of the rendered part of the map
-void init_map(const uint8_t mx, const uint8_t my, const uint8_t tlx, const uint8_t tly) {
+void init_map(const uint8_t mx, const uint8_t my, const uint8_t tlx,
+              const uint8_t tly) {
     map_x = mx;
     map_y = my;
     view_x = tlx;
@@ -63,4 +57,25 @@ void render_map() {
             set_bkg_tiles(x * 2, y * 2, 2, 2, tiles);
         }
     }
+    move_bkg(bg_x * 16, bg_y * 16);
+}
+
+void map_top() {
+    uint8_t tile;
+    // loaded spritesheet
+    uint8_t tiles[4];
+    --bg_y;
+    --view_y;
+    for (uint8_t x = bg_x; x < (bg_x + VIEW_WIDTH); ++x) {
+        // 4 tiles are a meta tile
+        tile = (tmp_map[((view_y + 0) * MAP_WIDTH) + view_x + x]) * 4;
+        // they are in special 8x16 format
+        tiles[0] = overworld_gb_map[tile];
+        tiles[2] = overworld_gb_map[tile + 1];
+        tiles[1] = overworld_gb_map[tile + 2];
+        tiles[3] = overworld_gb_map[tile + 3];
+        // draw meta tile in one go
+        set_bkg_tiles(x * 2, bg_y * 2, 2, 2, tiles);
+    }
+    scroll_bkg(0, -16);
 }

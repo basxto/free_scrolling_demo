@@ -21,9 +21,20 @@ void main() {
 
     // cgb_compatibility();
     set_bkg_data(0, sizeof(overworld_gb_data) / 16, overworld_gb_data);
-    //load_map(demo_tmap_background);
-    init_map(0, 0, 2, 2);
+    // load_map(demo_tmap_background);
+    init_map(0, 0, 2, 7);
 
     SHOW_BKG;
     SHOW_SPRITES;
+    while (1) {
+        switch (joypad()) {
+        case J_UP: // If joypad() is equal to UP
+            map_top();
+            delay(200);
+            break;
+        default:
+            break;
+        }
+        wait_vbl_done();
+    }
 }
