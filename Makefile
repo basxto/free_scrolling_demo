@@ -32,10 +32,10 @@ debug:
 	make DEBUG=1 $(ROM).gb
 	$(debug_emulator) ./$(ROM).gb
 
-$(BUILDIR)/main.asm: src/main.c $(BUILDIR)/overworld_1_gb_data.c $(BUILDIR)/demo_tmap.c | $(BUILDIR)/
+$(BUILDIR)/main.asm: src/main.c $(BUILDIR)/overworld_a_gb_data.c $(BUILDIR)/demo_tmap.c | $(BUILDIR)/
 	$(CC) $(CFLAGS) -S -o $@ $<
 
-$(BUILDIR)/map.asm: src/map.c src/map.h $(BUILDIR)/overworld_1_gb_map.c | $(BUILDIR)/
+$(BUILDIR)/map.asm: src/map.c src/map.h $(BUILDIR)/overworld_a_gb_map.c | $(BUILDIR)/
 	$(CC) $(CFLAGS) -S -o $@ $<
 
 $(BUILDIR)/%.asm: src/%.c | $(BUILDIR)/
@@ -59,6 +59,10 @@ $(BUILDIR)/%.2bpp $(BUILDIR)/%.tilemap: pix/%.png | $(BUILDIR)/
 $(BUILDIR)/overworld_1_gb.png: $(BUILDIR)/overworld_a_gb.png $(BUILDIR)/overworld_b_gb.png
 	$(montage) $^ png24:$@
 	$(pngconvert) --fix $@
+
+# for quick tileset testing
+#$(BUILDIR)/overworld_a_gb.png: $(BUILDIR)/overworld_a_house_ext_gb.png
+#	cp $< $@
 
 # switch to dmg palette and combine metatile rows
 $(BUILDIR)/overworld_%_gb.png: pix/overworld_%_gbc.png | $(BUILDIR)/

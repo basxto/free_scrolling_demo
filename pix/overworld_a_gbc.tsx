@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.4" tiledversion="1.4.3" name="overworld_a_gbc" tilewidth="16" tileheight="16" tilecount="32" columns="8">
- <image source="overworld_a_gbc.png" trans="65ca00" width="128" height="64"/>
+<tileset version="1.4" tiledversion="1.4.3" name="Overworld A (gbc)" tilewidth="16" tileheight="16" tilecount="32" columns="8">
+ <image source="overworld_a_gbc.png" width="128" height="64"/>
  <terraintypes>
   <terrain name="grass" tile="0"/>
   <terrain name="tree" tile="12"/>

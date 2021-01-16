@@ -28,8 +28,9 @@ if args.output != "":
 xmldoc = minidom.parse(filename)
 tmxmap = xmldoc.getElementsByTagName('map')[0]
 
-if tmxmap.attributes['width'].value != "10" and tmxmap.attributes['height'].value != "9":
-    print("Map must be 9 tiles high and 10 tiles wide!", file=sys.stderr)
+# multiples of 16 are easiest to process on gb
+if tmxmap.attributes['width'].value != "16" and tmxmap.attributes['height'].value != "16":
+    print("Map must be 16 tiles high and 16 tiles wide!", file=sys.stderr)
     exit(2)
 
 file = open(cfilename,'w')

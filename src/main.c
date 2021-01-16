@@ -10,7 +10,7 @@
 #include "../build/demo_tmap.c"
 
 const uint8_t overworld_gb_data[] = {
-#include "../build/overworld_1_gb_data.c"
+#include "../build/overworld_a_gb_data.c"
 };
 
 void main() {
