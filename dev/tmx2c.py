@@ -38,7 +38,7 @@ file.write('//Generated from ' + filename + '\n')
 
 layers = xmldoc.getElementsByTagName('layer')
 for l in layers:
-    name = os.path.basename(filename).split('.')[0] + '_tmap_' + l.attributes['name'].value
+    name = os.path.basename(cfilename).split('.')[0] + '_' + l.attributes['name'].value
     row = l.getElementsByTagName('data')[0].firstChild.nodeValue
     # decrease each number 1,2,3->0,1,2
     row = ",".join(map(lambda s: decstr(s),row.split(',')))

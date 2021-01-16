@@ -7,7 +7,7 @@
 
 #include "map.h"
 
-#include "../build/demo_tmap.c"
+//#include "../build/demo_tmap.c"
 
 const uint8_t overworld_gb_data[] = {
 #include "../build/overworld_a_gb_data.c"
@@ -21,7 +21,8 @@ void main() {
 
     // cgb_compatibility();
     set_bkg_data(0, sizeof(overworld_gb_data) / 16, overworld_gb_data);
-    load_map(demo_tmap_background);
+    //load_map(demo_tmap_background);
+    init_map(0, 0, 2, 2);
 
     SHOW_BKG;
     SHOW_SPRITES;

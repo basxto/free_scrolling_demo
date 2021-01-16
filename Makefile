@@ -32,10 +32,10 @@ debug:
 	make DEBUG=1 $(ROM).gb
 	$(debug_emulator) ./$(ROM).gb
 
-$(BUILDIR)/main.asm: src/main.c $(BUILDIR)/overworld_a_gb_data.c $(BUILDIR)/demo_tmap.c | $(BUILDIR)/
+$(BUILDIR)/main.asm: src/main.c $(BUILDIR)/overworld_a_gb_data.c | $(BUILDIR)/
 	$(CC) $(CFLAGS) -S -o $@ $<
 
-$(BUILDIR)/map.asm: src/map.c src/map.h $(BUILDIR)/overworld_a_gb_map.c | $(BUILDIR)/
+$(BUILDIR)/map.asm: src/map.c src/map.h $(BUILDIR)/overworld_a_gb_map.c $(BUILDIR)/lvl_0_0_tmap.c $(BUILDIR)/lvl_0_1_tmap.c | $(BUILDIR)/
 	$(CC) $(CFLAGS) -S -o $@ $<
 
 $(BUILDIR)/%.asm: src/%.c | $(BUILDIR)/
@@ -70,7 +70,7 @@ $(BUILDIR)/overworld_%_gb.png: pix/overworld_%_gbc.png | $(BUILDIR)/
 	$(montage) \( $@ -crop x16 \) png24:$@
 	$(pngconvert) --fix $@
 
-$(BUILDIR)/%_tmap.c: lvl/%.tmx | $(BUILDIR)/
+$(BUILDIR)/lvl_%_tmap.c: lvl/%.tmx | $(BUILDIR)/
 	$(tmxconvert) $^ -o $@
 
 clean:

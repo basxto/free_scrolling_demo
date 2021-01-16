@@ -10,5 +10,10 @@
 #define VIEW_HIGHT (uint8_t)( 9)
 #define VIEW_WIDTH (uint8_t)(10)
 
-void load_map(const uint8_t background[]);
+typedef struct {
+    const uint8_t *background;
+} Level;
+
+void init_map(const uint8_t mx, const uint8_t my, const uint8_t x, const uint8_t y);
+void render_map();
 #endif
