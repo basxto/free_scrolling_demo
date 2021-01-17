@@ -22,7 +22,7 @@ $(BUILDIR)/:
 	mkdir -p $@
 
 $(ROM).gb: $(BUILDIR)/main.o $(BUILDIR)/map.o
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) -Wm-yc -Wm-yn="FREESCROLLDEMO" -o $@ $^
 
 run: $(ROM).gb
 	$(emulator) ./$(ROM).gb
@@ -35,7 +35,7 @@ debug:
 $(BUILDIR)/main.asm: src/main.c $(BUILDIR)/overworld_a_gb_data.c $(BUILDIR)/overworld_b_gb_data.c | $(BUILDIR)/
 	$(CC) $(CFLAGS) --fverbose-asm -S -o $@ $<
 
-$(BUILDIR)/map.asm: src/map.c src/map.h $(BUILDIR)/overworld_a_gb_map.c $(BUILDIR)/overworld_b_gb_map.c $(BUILDIR)/lvl_0_0_tmap.c $(BUILDIR)/lvl_0_1_tmap.c | $(BUILDIR)/
+$(BUILDIR)/map.asm: src/map.c src/map.h $(BUILDIR)/overworld_a_gb_map.c $(BUILDIR)/overworld_a_gbc_pal.c $(BUILDIR)/overworld_b_gb_map.c $(BUILDIR)/overworld_b_gbc_pal.c $(BUILDIR)/lvl_0_0_tmap.c $(BUILDIR)/lvl_0_1_tmap.c | $(BUILDIR)/
 	$(CC) $(CFLAGS) --fverbose-asm -S -o $@ $<
 
 $(BUILDIR)/%.asm: src/%.c | $(BUILDIR)/
@@ -50,15 +50,17 @@ $(BUILDIR)/%.asm: src/%.c | $(BUILDIR)/
 $(BUILDIR)/%.2bpp $(BUILDIR)/%.tilemap: pix/%.png | $(BUILDIR)/
 	$(pngconvert) $< -o $(BUILDIR)/$*.2bpp -t $(BUILDIR)/$*.tilemap
 
+$(BUILDIR)/%.pal: pix/%.png | $(BUILDIR)/
+	dev/SuperFamiconv/bin/superfamiconv -RF -M gbc -i $< -p $@
+
+%_pal.c: %.pal
+	$(xxd) -c8 < $< > $@
+
 %_data.c: %.2bpp
 	$(xxd) < $< > $@
 
 %_map.c: %.tilemap
 	$(xxd) < $< > $@
-
-$(BUILDIR)/overworld_1_gb.png: $(BUILDIR)/overworld_a_gb.png $(BUILDIR)/overworld_b_gb.png
-	$(montage) $^ png24:$@
-	$(pngconvert) --fix $@
 
 # for quick tileset testing
 #$(BUILDIR)/overworld_a_gb.png: $(BUILDIR)/overworld_a_house_ext_gb.png
@@ -67,8 +69,8 @@ $(BUILDIR)/overworld_1_gb.png: $(BUILDIR)/overworld_a_gb.png $(BUILDIR)/overworl
 # switch to dmg palette and combine metatile rows
 $(BUILDIR)/overworld_%_gb.png: pix/overworld_%_gbc.png | $(BUILDIR)/
 	$(loadgpl) $^ pix/gb4.gpl $@
+	# image magick would fuck up the tilemap order of png8
 	$(montage) \( $@ -crop x16 \) png24:$@
-	$(pngconvert) --fix $@
 
 $(BUILDIR)/lvl_%_tmap.c: lvl/%.tmx | $(BUILDIR)/
 	$(tmxconvert) $^ -o $@
