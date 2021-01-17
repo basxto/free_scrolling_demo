@@ -13,6 +13,8 @@
     "C_Cpp.default.systemIncludePath" : [
         "/opt/gbdk-2020/include/",
         "/opt/gbdk-2020/include/asm/",
-        "/usr/share/sdcc/include/"
+        "/usr/share/sdcc/include/",
+        "${workspaceFolder}/src/**",
+        "${workspaceFolder}/build/**"
     ]
 }

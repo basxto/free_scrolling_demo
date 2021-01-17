@@ -5,7 +5,7 @@
             "type": "emulicious-debugger",
             "name": "Launch in Emulicious",
             "request": "launch",
-            "program": "fsr.gb",
+            "program": "${workspaceFolder}/fsr.gb",
             "port": 58870
         },
         {
