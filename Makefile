@@ -72,7 +72,7 @@ $(BUILDIR)/overworld_%_gb.png: pix/overworld_%_gbc.png | $(BUILDIR)/
 	# image magick would fuck up the tilemap order of png8
 	$(montage) \( $@ -crop x16 \) png24:$@
 
-$(BUILDIR)/lvl_%_tmap.c: lvl/%.tmx | $(BUILDIR)/
+$(BUILDIR)/%_tmap.c: lvl/%.tmx | $(BUILDIR)/
 	$(tmxconvert) $^ -o $@
 
 clean:

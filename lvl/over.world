@@ -1,7 +1,7 @@
 {
     "patterns": [
         {
-            "regexp": "(\\d+)_(\\d+)\\.tmx",
+            "regexp": "lvl_(\\d+)_(\\d+)\\.tmx",
             "multiplierX": 256,
             "multiplierY": 256,
             "offsetX": -256,
