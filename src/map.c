@@ -51,6 +51,7 @@ void init_map(const uint8_t mx, const uint8_t my, const uint8_t tlx,
     render_map();
 }
 
+// TODO: use a row/column renderer
 // tlx,tly marks the top left of the rendered part of the map
 void render_map() {
     uint8_t tile;
@@ -70,15 +71,25 @@ void render_map() {
                 index += 2; // 3 or 4
             }
             uint8_t tile_index = (uint8_t)(final_y * MAP_WIDTH) + final_x;
+            tile = tmp_map[index][tile_index];
+            // translate coordinatets to 16x16 meta tiles
+            final_x *= 2;
+            final_y *= 2;
+            VBK_REG = 1;
+            // set palette
+            tiles[0] = tiles[1] = tiles[2] = tiles[3] = (tile/TILESET_WIDTH);
+            set_bkg_tiles(final_x, final_y, 2, 2, tiles);
+            VBK_REG = 0;
+            // set actual tiles
             // 4 tiles are a meta tile
-            tile = tmp_map[index][tile_index] * 4;
+            tile *= 4;
             // they are in special 8x16 format
             tiles[0] = tmp_tilemap[tile++];
             tiles[2] = tmp_tilemap[tile++];
             tiles[1] = tmp_tilemap[tile++];
             tiles[3] = tmp_tilemap[tile];
             // draw meta tile in one go
-            set_bkg_tiles((final_x)*2, (final_y)*2, 2, 2, tiles);
+            set_bkg_tiles(final_x, final_y, 2, 2, tiles);
         }
     }
     move_bkg(bg_x * 16, bg_y * 16);

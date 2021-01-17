@@ -10,6 +10,9 @@
 #define VIEW_HIGHT (uint8_t)( 9)
 #define VIEW_WIDTH (uint8_t)(10)
 
+// in meta tiles
+#define TILESET_WIDTH (uint8_t)(8)
+
 typedef struct {
     const uint8_t *background;
 } Level;
