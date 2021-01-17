@@ -2,6 +2,7 @@ CC=lcc
 emulator=sameboy
 debug_emulator=emulicious
 tmxconvert=./dev/tmx2c.py
+superfamiconv=dev/SuperFamiconv/bin/superfamiconv
 pngconvert=rgbgfx
 pngconvert+= -h -u
 xxd=xxd
@@ -51,7 +52,11 @@ $(BUILDIR)/%.2bpp $(BUILDIR)/%.tilemap: pix/%.png | $(BUILDIR)/
 	$(pngconvert) $< -o $(BUILDIR)/$*.2bpp -t $(BUILDIR)/$*.tilemap
 
 $(BUILDIR)/%.pal: pix/%.png | $(BUILDIR)/
-	dev/SuperFamiconv/bin/superfamiconv -RF -M gbc -i $< -p $@
+	$(superfamiconv) -RF -M gbc -i $< -p $@
+
+# for debugging tile usage mostly
+$(BUILDIR)/%.png: pix/%.png | $(BUILDIR)/
+	$(superfamiconv) -RF -M gbc -i $< --out-tiles-image $@
 
 %_pal.c: %.pal
 	$(xxd) -c8 < $< > $@

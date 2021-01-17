@@ -4,7 +4,7 @@
  <terraintypes>
   <terrain name="sand" tile="0"/>
   <terrain name="tree" tile="12"/>
-  <terrain name="water" tile="31"/>
+  <terrain name="water" tile="26"/>
  </terraintypes>
  <tile id="0" terrain="0,0,0,0"/>
  <tile id="1" terrain="0,0,0,0" probability="0.01"/>
@@ -77,42 +77,42 @@
    <property name="collision" type="bool" value="true"/>
   </properties>
  </tile>
- <tile id="24" terrain="2,2,2,2" probability="0">
+ <tile id="24" terrain="2,2,2,2">
   <properties>
    <property name="collision" type="bool" value="true"/>
   </properties>
  </tile>
- <tile id="25" terrain="2,2,2,2" probability="0">
+ <tile id="25" terrain="2,2,2,2" probability="0.01">
   <properties>
    <property name="collision" type="bool" value="true"/>
   </properties>
  </tile>
- <tile id="26" terrain="2,2,2,2">
+ <tile id="26" terrain="2,2,2,2" probability="0.1">
   <properties>
    <property name="collision" type="bool" value="true"/>
   </properties>
  </tile>
- <tile id="27" terrain="2,2,2,2" probability="0.01">
+ <tile id="27" terrain="0,0,2,2">
   <properties>
    <property name="collision" type="bool" value="true"/>
   </properties>
  </tile>
- <tile id="28" terrain="0,0,2,2">
+ <tile id="28" terrain="0,0,0,2">
   <properties>
    <property name="collision" type="bool" value="true"/>
   </properties>
  </tile>
- <tile id="29" terrain="0,0,0,2">
+ <tile id="29" terrain="0,0,2,0">
   <properties>
    <property name="collision" type="bool" value="true"/>
   </properties>
  </tile>
- <tile id="30" terrain="0,0,2,0">
+ <tile id="30">
   <properties>
    <property name="collision" type="bool" value="true"/>
   </properties>
  </tile>
- <tile id="31" terrain="2,2,2,2" probability="0.1">
+ <tile id="31">
   <properties>
    <property name="collision" type="bool" value="true"/>
   </properties>
@@ -131,11 +131,10 @@
    <wangtile tileid="24" wangid="0x2020202"/>
    <wangtile tileid="25" wangid="0x2020202"/>
    <wangtile tileid="26" wangid="0x2020202"/>
-   <wangtile tileid="27" wangid="0x2020202"/>
-   <wangtile tileid="28" wangid="0x2020201"/>
-   <wangtile tileid="29" wangid="0x1020201"/>
-   <wangtile tileid="30" wangid="0x2020101"/>
-   <wangtile tileid="31" wangid="0x2020202"/>
+   <wangtile tileid="27" wangid="0x2020201"/>
+   <wangtile tileid="28" wangid="0x1020201"/>
+   <wangtile tileid="29" wangid="0x2020101"/>
+   <wangtile tileid="30" wangid="0x1020101"/>
   </wangset>
  </wangsets>
 </tileset>
