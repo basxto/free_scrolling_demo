@@ -1,3 +1,10 @@
+License
+-------
+
+The code is licensed under [MIT](LICENSE.md).
+
+For graphics see the [attribution](pix/ATTRIBUTION.md) file there.
+
 How to build
 ------------
 
