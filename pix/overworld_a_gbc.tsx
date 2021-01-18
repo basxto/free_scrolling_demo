@@ -43,17 +43,21 @@
  <tile id="14" terrain="0,0,0,0" probability="0">
   <properties>
    <property name="collision" type="bool" value="true"/>
+   <property name="toRight" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="15" terrain="0,0,0,0" probability="0"/>
  <tile id="16">
   <properties>
    <property name="collision" type="bool" value="true"/>
+   <property name="read" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="17">
   <properties>
    <property name="collision" type="bool" value="true"/>
+   <property name="permanent" type="bool" value="true"/>
+   <property name="toRight" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="18">
@@ -61,19 +65,21 @@
    <property name="collision" type="bool" value="true"/>
   </properties>
  </tile>
+ <tile id="23">
+  <properties>
+   <property name="door" type="bool" value="true"/>
+  </properties>
+ </tile>
  <tile id="24">
   <properties>
    <property name="collision" type="bool" value="true"/>
+   <property name="read" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="25">
   <properties>
    <property name="collision" type="bool" value="true"/>
-  </properties>
- </tile>
- <tile id="26">
-  <properties>
-   <property name="collision" type="bool" value="true"/>
+   <property name="move" type="bool" value="true"/>
   </properties>
  </tile>
 </tileset>

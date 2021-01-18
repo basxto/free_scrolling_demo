@@ -11,21 +11,6 @@
  <tile id="2" terrain="0,0,0,0" probability="0.1"/>
  <tile id="3" terrain="0,0,0,0" probability="0.3"/>
  <tile id="4" terrain="0,0,0,0" probability="0.2"/>
- <tile id="5">
-  <properties>
-   <property name="collision" type="bool" value="true"/>
-  </properties>
- </tile>
- <tile id="6">
-  <properties>
-   <property name="collision" type="bool" value="true"/>
-  </properties>
- </tile>
- <tile id="7">
-  <properties>
-   <property name="collision" type="bool" value="true"/>
-  </properties>
- </tile>
  <tile id="8" terrain="0,0,0,1">
   <properties>
    <property name="collision" type="bool" value="true"/>
@@ -59,17 +44,21 @@
  <tile id="14" terrain="0,0,0,0" probability="0">
   <properties>
    <property name="collision" type="bool" value="true"/>
+   <property name="toRight" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="15" terrain="0,0,0,0" probability="0"/>
  <tile id="16">
   <properties>
    <property name="collision" type="bool" value="true"/>
+   <property name="read" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="17">
   <properties>
    <property name="collision" type="bool" value="true"/>
+   <property name="permanent" type="bool" value="true"/>
+   <property name="toRight" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="18">
@@ -108,11 +97,6 @@
   </properties>
  </tile>
  <tile id="30">
-  <properties>
-   <property name="collision" type="bool" value="true"/>
-  </properties>
- </tile>
- <tile id="31">
   <properties>
    <property name="collision" type="bool" value="true"/>
   </properties>
